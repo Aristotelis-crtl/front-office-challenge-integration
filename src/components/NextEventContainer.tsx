@@ -4,13 +4,26 @@ import { Carousel, Select } from 'antd'
 import { CarouselRef } from 'antd/lib/carousel'
 import { Empty } from 'antd'
 import { LeftOutlined, RightOutlined } from '@ant-design/icons'
+import { SportInfo } from '../types/EventsTypes'
 import { useEffect, useRef, useState } from 'react'
 
 const NextEventContainer = () => {
   const { Option } = Select
   const carousel = useRef<CarouselRef>(null)
   const [filters, setFilters] = useState<string[]>([])
-  const [events, setEvents] = useState(data.nextEvent)
+  const [events, setEvents] = useState<SportInfo[]>(data.nextEvent)
+  const [indexCarousel, setCarouselIndex] = useState<number>(0)
+
+  const arrowStyle = {
+    backgroundColor: '#FFFAFA',
+    borderRadius: '50%',
+    display: 'flex',
+    padding: '0.75% 0.75%',
+    border: '1px solid',
+    borderColor: '#D8D8D6',
+    cursor: 'pointer',
+    boxShadow: `0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)`,
+  }
   const settings = {
     dots: false,
     infinite: false,
@@ -21,6 +34,7 @@ const NextEventContainer = () => {
 
   const handlePrev = () => carousel.current?.prev()
   const handleNext = () => carousel.current?.next()
+
   const handleChange = (value: string[]) => {
     setFilters(value)
   }
@@ -33,6 +47,7 @@ const NextEventContainer = () => {
         return filters.includes(sport.sportTitle)
       })
     )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters])
   return (
     <>
@@ -48,27 +63,50 @@ const NextEventContainer = () => {
           </Option>
         ))}
       </Select>
-      <p style={{ fontSize: '1.5rem', fontWeight: 'bold', marginTop: '1rem' }}>
+      <p style={{ fontSize: '1.4rem', fontWeight: 'bold', marginTop: '1rem' }}>
         Prochaines épreuves
       </p>
       {filters.length > 0 ? (
         <>
           <div style={{ alignItems: 'center', display: 'flex', justifyContent: 'center' }}>
-            <LeftOutlined
-              onClick={handlePrev}
-              style={{ color: filters.length > 3 ? 'black' : 'silver' }}
-            />
+            <div style={arrowStyle} onClick={handlePrev}>
+              <LeftOutlined
+                style={{
+                  color: filters.length > 3 && indexCarousel >= 1 ? 'black' : 'silver',
+                  fontSize: '1rem',
+                }}
+              />
+            </div>
             <div style={{ width: '90%', marginRight: 'auto', marginLeft: 'auto' }}>
-              <Carousel {...settings} ref={carousel}>
+              <Carousel
+                {...settings}
+                ref={carousel}
+                key="carousel"
+                afterChange={(e) => setCarouselIndex(e)}
+              >
                 {events.map((data) => {
-                  return <EventCard props={data} key={data.id} />
+                  return (
+                    <EventCard
+                      sportTitle={data.sportTitle}
+                      pictureUrl={data.pictureUrl}
+                      date={data.date}
+                      id={data.id as string}
+                      sportId={data.sportId as string}
+                      key={data.id}
+                    />
+                  )
                 })}
               </Carousel>
             </div>
-            <RightOutlined
-              onClick={handleNext}
-              style={{ color: filters.length > 3 ? 'black' : 'silver' }}
-            />
+            <div style={arrowStyle} onClick={handleNext}>
+              <RightOutlined
+                style={{
+                  color:
+                    filters.length > 3 && indexCarousel <= filters.length - 4 ? 'black' : 'silver',
+                  fontSize: '1rem',
+                }}
+              />
+            </div>
           </div>
         </>
       ) : (

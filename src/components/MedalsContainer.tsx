@@ -1,5 +1,4 @@
 import data from '../data.json'
-import React from 'react'
 import { ColumnsType } from 'antd/es/table'
 import { Medals } from '../types/MedalsType'
 import { Table } from 'antd'
@@ -45,7 +44,12 @@ const MedalsContainer = () => {
       defaultSortOrder: 'descend',
     },
   ]
-  return <Table columns={columns} dataSource={medalsWithTotal} pagination={false} />
+  return (
+    <>
+      <h1 style={{ fontSize: '1.4rem', fontWeight: 'bold', marginTop: '1rem' }}>Médailles</h1>
+      <Table columns={columns} dataSource={medalsWithTotal} pagination={false} />
+    </>
+  )
 }
 
 export default MedalsContainer

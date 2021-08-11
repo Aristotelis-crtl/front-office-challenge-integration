@@ -1,6 +1,6 @@
 export interface SportInfo {
-  id: number
-  sportId: number
+  id: string
+  sportId: string
   sportTitle: string
   pictureUrl: string
   date: string

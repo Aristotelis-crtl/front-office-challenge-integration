@@ -1,17 +1,12 @@
+import moment from 'moment'
 import { Card } from 'antd'
-const EventCard = (props: any) => {
+import { FunctionComponent } from 'react'
+import { SportInfo } from '../types/EventsTypes'
+const EventCard: FunctionComponent<SportInfo> = (props) => {
   const { Meta } = Card
-
+  const { sportTitle, pictureUrl, date } = props
   function formatDate(date: number) {
-    var a = new Date(date * 1000)
-    var year = a.getFullYear()
-    var month = a.getMonth()
-    var day = a.getDate()
-    var hour = a.getHours()
-    var min = a.getMinutes()
-    var time = `${day}/${month < 10 ? `0${month}` : month}/${year} - ${hour}:${
-      min < 10 ? `0${min}` : min
-    }`
+    let time: string = moment(date * 1000).format('DD/MM/YYYY - h:mm')
     return time
   }
   return (
@@ -20,12 +15,12 @@ const EventCard = (props: any) => {
         cover={
           <img
             alt="Représentation du sportif en action"
-            src={props.props.pictureUrl}
+            src={pictureUrl}
             style={{ width: '100%', height: '15vw', objectFit: 'cover' }}
           />
         }
       >
-        <Meta title={props.props.sportTitle} description={formatDate(props.props.date)} />
+        <Meta title={sportTitle} description={formatDate(parseInt(date))} />
       </Card>
     </>
   )
