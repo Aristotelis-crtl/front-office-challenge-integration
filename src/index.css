@@ -4,6 +4,7 @@ body {
     'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #eeeeee !important;
 }
 
 #root {
@@ -12,4 +13,10 @@ body {
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Roboto', monospace;
+}
+.slick-list {
+  margin: 0 0.25rem;
+}
+.slick-slide > div {
+  padding: 0 0.25rem;
 }
