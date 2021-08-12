@@ -5,6 +5,7 @@ import { Table } from 'antd'
 
 const MedalsContainer = () => {
   const medals: Medals[] = data.medals
+  /* Add total property to medal object */
   const medalsWithTotal: Medals[] = medals.map((elt: Medals) => {
     let total: number = elt.medals.silver + elt.medals.bronze + elt.medals.gold
     return { total: total, ...elt }

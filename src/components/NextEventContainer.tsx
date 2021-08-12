@@ -47,6 +47,7 @@ const NextEventContainer = () => {
         return filters.includes(sport.sportTitle)
       })
     )
+    /* When a filter is added, updates events state */
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters])
   return (
