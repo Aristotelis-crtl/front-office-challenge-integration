@@ -20,3 +20,8 @@ code {
 .slick-slide > div {
   padding: 0 0.25rem;
 }
+
+.slick-track {
+  margin-left: auto;
+  margin-right: auto;
+}
